@@ -8,8 +8,10 @@ def prep_iris():
     
     return: clean dataframe
     '''
+    df = acquire.get_iris_data(cached=False)
     df.drop_duplicates(inplace=True)
     df = df.drop(['species_id'], axis=1)
     df.rename(columns={"species_name": "species"}, inplace=True)
-    dummies = pd.get_dummies(df[['species']], drop_first=False)
-    return pd.concat([df, dummies], axis=1)
+    dummies = pd.get_dummies(df[['species']], drop_first=True)
+    df = pd.concat([df, dummies], axis=1)
+    return df
